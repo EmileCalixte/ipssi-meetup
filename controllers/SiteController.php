@@ -6,14 +6,10 @@ use app\models\databaseModels\User;
 use app\models\forms\RegisterForm;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Yii;
-use yii\filters\AccessControl;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\web\Response;
-use yii\filters\VerbFilter;
 use app\models\forms\LoginForm;
 
-class SiteController extends Controller
+class SiteController extends _MainController
 {
     /**
      * {@inheritdoc}
