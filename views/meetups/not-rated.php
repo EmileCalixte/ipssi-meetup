@@ -4,38 +4,32 @@
 
 use app\components\Util;
 use app\models\databaseModels\Meetup;
-use app\models\search\MeetupSearch;
+use app\models\databaseModels\Vote;
+use app\models\User;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 
-/** @var yii\data\ActiveDataProvider $meetupsDataProvider */
-/** @var MeetupSearch $searchModel */
+/** @var yii\data\ActiveDataProvider $notRatedMeetupsDataProvider */
 
-$this->title = 'Meetups';
+$this->title = 'Not rated meetups';
+
+/** @var User $user */
+$user = Yii::$app->user->identity;
 ?>
 
 <h1><?= Html::encode($this->title) ?></h1>
 
-<form method="get">
-    <div id="search-container" class="input-group col-sm-12 col-md-6" style="margin-bottom: 10px;">
-        <input type="text" name="search" class="form-control" placeholder="Search for a meetup title" value="<?= isset($_GET['search']) ? $_GET['search'] : '' ?>">
-        <div class="input-group-btn">
-            <button type="submit" class="btn btn-success"><i class="fas fa-search"></i></button>
-        </div>
-    </div>
-</form>
-
 <?php Pjax::begin(); ?>
 
 <?= GridView::widget([
-    'dataProvider' =>$meetupsDataProvider,
+    'dataProvider' => $notRatedMeetupsDataProvider,
     'formatter' => [
         'class' => yii\i18n\Formatter::class,
         'nullDisplay' => '<i style="color: #999">-</i>',
     ],
     'layout' => '{items}{pager}',
-    'emptyText' => 'There is currently no meetups.',
+    'emptyText' => 'You rated all meetups.',
     'columns' => [
         [
             'attribute' => 'title',

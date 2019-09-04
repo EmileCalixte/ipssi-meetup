@@ -53,7 +53,7 @@ $config = [
 
                 '/meetups/view/<id:\d+>' => 'meetups/view',
 
-                '/site/<action:\w+>' => 'site/not-found',
+//                '/site/<action:\w+>' => 'site/not-found',
 //                '/<controller:\w+>/index' => 'site/not-found',
             ],
         ],

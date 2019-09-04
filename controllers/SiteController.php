@@ -2,10 +2,13 @@
 
 namespace app\controllers;
 
+use app\models\databaseModels\Meetup;
 use app\models\databaseModels\User;
 use app\models\forms\RegisterForm;
+use app\models\search\MeetupSearch;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 use app\models\forms\LoginForm;
 
@@ -29,7 +32,37 @@ class SiteController extends _MainController
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $searchModel = new MeetupSearch();
+
+        $query = Meetup::find()
+            ->select("
+                    meetup.id as id,
+                    meetup.title as title,
+                    avg(vote.value) as rating,
+                    count(vote.value) as rates")
+            ->leftJoin('vote', 'meetup.id = vote.meetup_id')
+            ->groupBy('meetup.id');
+
+        if(isset($_GET['search'])) {
+            $query->where(['like', 'title', $_GET['search']]);
+        }
+
+        $meetupsDataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+                'defaultPageSize' => 10
+            ],
+            'sort' => [
+                'attributes' => ['title', 'rating', 'rates'],
+                'defaultOrder' => ['rating' => SORT_DESC],
+            ],
+        ]);
+
+        return $this->render('index', [
+            'meetupsDataProvider' => $meetupsDataProvider,
+            'searchModel' => $searchModel,
+        ]);
     }
 
     public function actionRegister()

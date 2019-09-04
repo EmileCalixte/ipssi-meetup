@@ -30,6 +30,8 @@ class _MainController extends Controller
             'site/login',
             'site/register',
             'site/error',
+            'meetups/index',
+            'meetups/view',
         ];
 
         if(Yii::$app->user->isGuest) {

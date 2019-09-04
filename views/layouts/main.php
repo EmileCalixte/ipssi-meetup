@@ -42,10 +42,12 @@ if(Yii::$app->user->isGuest) {
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/fontawesome/css/all.min.css">
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="/starrr/starrr.css">
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
 </head>
 <body>
 <?php $this->beginBody() ?>

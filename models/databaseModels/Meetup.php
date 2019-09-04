@@ -14,6 +14,7 @@ use Yii;
  *
  * @property User $creator
  * @property Vote[] $votes
+ * @property User[] $voters
  */
 class Meetup extends \yii\db\ActiveRecord
 {
@@ -66,5 +67,13 @@ class Meetup extends \yii\db\ActiveRecord
     public function getVotes()
     {
         return $this->hasMany(Vote::className(), ['meetup_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVoters()
+    {
+        return $this->hasMany(User::className(), ['id' => 'voter_id'])->viaTable('vote', ['meetup_id' => 'id']);
     }
 }
