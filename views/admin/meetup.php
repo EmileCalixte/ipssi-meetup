@@ -41,7 +41,7 @@ $this->title = 'Admin panel - ' . $meetup->title;
             'format' => 'raw',
             'value' => function ($vote) {
                 /** @var Vote $vote */
-                return '<a data-pjax=0 href="/admin/users/' . $vote->voter->id . '">' . Html::encode($vote->voter->firstname) . '</a>';
+                return '<a data-pjax=0 href="/admin/users/' . $vote->voter->id . '">' . Html::encode($vote->voter->firstname) . ' ' . Html::encode($vote->voter->lastname) . '</a>';
             }
         ],
         [
