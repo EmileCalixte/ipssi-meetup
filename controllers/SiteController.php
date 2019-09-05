@@ -2,18 +2,17 @@
 
 namespace app\controllers;
 
+use app\models\databaseModels\Meetup;
 use app\models\databaseModels\User;
 use app\models\forms\RegisterForm;
+use app\models\search\MeetupSearch;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Yii;
-use yii\filters\AccessControl;
-use yii\web\Controller;
+use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
-use yii\web\Response;
-use yii\filters\VerbFilter;
 use app\models\forms\LoginForm;
 
-class SiteController extends Controller
+class SiteController extends _MainController
 {
     /**
      * {@inheritdoc}
@@ -33,30 +32,57 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $query = Meetup::find()
+            ->select("
+                    meetup.id as id,
+                    meetup.title as title,
+                    avg(vote.value) as rating,
+                    count(vote.value) as rates")
+            ->leftJoin('vote', 'meetup.id = vote.meetup_id')
+            ->groupBy('meetup.id');
+
+        if (isset($_GET['search'])) {
+            $query->where(['like', 'title', $_GET['search']]);
+        }
+
+        $meetupsDataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+                'defaultPageSize' => 10
+            ],
+            'sort' => [
+                'attributes' => ['title', 'rating', 'rates'],
+                'defaultOrder' => ['rating' => SORT_DESC],
+            ],
+        ]);
+
+        return $this->render('index', [
+            'meetupsDataProvider' => $meetupsDataProvider,
+        ]);
     }
 
     public function actionRegister()
     {
-        if(!Yii::$app->user->isGuest) {
+        if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
         $model = new RegisterForm();
-        if($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $user = new User();
             $user->email = $model->email;
             $user->firstname = $model->firstname;
             $user->lastname = $model->lastname;
             $user->password_hash = Yii::$app->security->generatePasswordHash($model->password);
             $user->register_date = gmdate('Y-m-d H:i:s');
-            if(!$user->save()) {
+            if (!$user->save()) {
                 throw new InternalErrorException();
             }
 
             // On login l'utilisateur directement
             $identityUser = \app\models\User::findOne(['id' => $user->id]);
-            if(! is_null($identityUser)) {
+            if (! is_null($identityUser)) {
                 Yii::$app->user->login($identityUser);
             }
             return $this->goHome();
@@ -71,12 +97,12 @@ class SiteController extends Controller
 
     public function actionLogin()
     {
-        if(!Yii::$app->user->isGuest) {
+        if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
         $model = new LoginForm();
-        if($model->load(Yii::$app->request->post()) && $model->login()) {
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }
 
@@ -100,6 +126,6 @@ class SiteController extends Controller
 
     public function actionNotFound()
     {
-        throw new NotFoundHttpException('Page not found');
+        throw new NotFoundHttpException('Page not found.');
     }
 }

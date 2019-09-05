@@ -8,7 +8,6 @@ use app\widgets\Alert;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
 AppAsset::register($this);
@@ -17,15 +16,19 @@ AppAsset::register($this);
 $identity = Yii::$app->user->identity;
 
 $navItems = [
+    ['label' => 'Meetups', 'url' => ['/meetups']]
 ];
 
-if(Yii::$app->user->isGuest) {
+if (Yii::$app->user->isGuest) {
     $navItems[] = ['label' => 'Login', 'url' => ['/login']];
     $navItems[] = ['label' => 'Register', 'url' => ['/register']];
 } else {
+    if ($identity->is_admin) {
+        $navItems[] = ['label' => 'Admin', 'url' => ['/admin']];
+    }
     $navItems[] =
         '<li>'
-        . Html::beginForm(['/site/logout'], 'post')
+        . Html::beginForm(['/logout'], 'post')
         . Html::submitButton(
             'Logout (' . $identity->firstname . ' ' . $identity->lastname . ')',
             ['class' => 'btn btn-link logout']
@@ -45,7 +48,9 @@ if(Yii::$app->user->isGuest) {
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
-
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="/starrr/starrr.css">
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
 </head>
 <body>
 <?php $this->beginBody() ?>

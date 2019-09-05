@@ -49,8 +49,15 @@ $config = [
             'rules' => [
                 '/login' => 'site/login',
                 '/register' => 'site/register',
+                '/logout' => 'site/logout',
 
-                '/site/<action:\w+>' => 'site/not-found',
+                '/meetups/view/<id:\d+>' => 'meetups/view',
+
+                '/admin/meetups/<word:\w+>' => 'admin/meetups',
+                '/admin/users/<id:\d+>' => 'admin/users'
+
+//                '/site/<action:\w+>' => 'site/not-found',
+//                '/<controller:\w+>/index' => 'site/not-found',
             ],
         ],
 

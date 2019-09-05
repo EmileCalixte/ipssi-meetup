@@ -12,7 +12,8 @@ use Yii;
 use yii\base\Model;
 use app\models\User;
 
-class RegisterForm extends Model {
+class RegisterForm extends Model
+{
     public $firstname;
     public $lastname;
     public $email;
@@ -54,7 +55,7 @@ class RegisterForm extends Model {
     public function validateEmail($attribute, $params)
     {
         $user = User::findOne(['email' => $this->email]);
-        if(!is_null($user)) {
+        if (!is_null($user)) {
             $this->addError($attribute, 'This email address is already used.');
         }
     }
@@ -67,7 +68,7 @@ class RegisterForm extends Model {
      */
     public function validatePassword($attribute, $params)
     {
-        if(strlen($this->password) < 8) {
+        if (strlen($this->password) < 8) {
             $this->addError($attribute, 'Password must be at least 8 characters long.');
         }
 //        if(!(preg_match('/[A-Za-z]/', $this->password) && preg_match('/\\d/', $this->password))) {

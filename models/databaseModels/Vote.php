@@ -31,8 +31,9 @@ class Vote extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'meetup_id', 'voter_id', 'value'], 'required'],
-            [['id', 'meetup_id', 'voter_id', 'value'], 'integer'],
+            [['meetup_id', 'voter_id', 'value'], 'required'],
+            [['meetup_id', 'voter_id', 'value'], 'integer'],
+            [['meetup_id', 'voter_id'], 'unique', 'targetAttribute' => ['meetup_id', 'voter_id']],
             [['meetup_id'], 'exist', 'skipOnError' => true, 'targetClass' => Meetup::className(), 'targetAttribute' => ['meetup_id' => 'id']],
             [['voter_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['voter_id' => 'id']],
         ];
