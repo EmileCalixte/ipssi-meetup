@@ -6,7 +6,9 @@
 $this->title = 'Create a meetup';
 
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm; ?>
+use yii\bootstrap\ActiveForm;
+
+?>
 
 <div class="meetup-create">
     <h1><?= Html::encode($this->title) ?></h1>

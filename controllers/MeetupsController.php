@@ -3,7 +3,6 @@
 
 namespace app\controllers;
 
-
 use app\components\Util;
 use app\models\databaseModels\Meetup;
 use app\models\databaseModels\Vote;
@@ -25,45 +24,20 @@ class MeetupsController extends _MainController
         return $this->render('index');
     }
 
-    public function actionCreate()
-    {
-        $model = new CreateMeetupForm();
-
-        if($model->load(Yii::$app->request->post()) && $model->validate()) {
-            /** @var User $user */
-            $user = Yii::$app->user->identity;
-
-            $meetup = new Meetup();
-            $meetup->title = $model->title;
-            $meetup->description = $model->description;
-            $meetup->creator_id = $user->id;
-
-            if(!$meetup->save()) {
-                throw new InternalErrorException();
-            }
-
-            return $this->redirect('/meetups');
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
-
     public function actionView($id = null)
     {
-        if(is_null($id)) {
-            throw new NotFoundHttpException('Page not found');
+        if (is_null($id)) {
+            throw new NotFoundHttpException('Page not found.');
         }
         $meetup = Meetup::findOne(['id' => $id]);
-        if(is_null($meetup)) {
+        if (is_null($meetup)) {
             throw new NotFoundHttpException('Meetup not found');
         }
 
         $votes = $meetup->votes;
-        if(count($votes) > 0) {
+        if (count($votes) > 0) {
             $voteValues = [];
-            foreach($votes as $vote) {
+            foreach ($votes as $vote) {
                 $voteValues[] = $vote->value;
             }
             $rating = Util::rateAverage(...$voteValues);
@@ -97,7 +71,7 @@ class MeetupsController extends _MainController
             ->all();
 
         $ratedMeetupsIds = [];
-        foreach($ratedMeetupsVotes as $vote) {
+        foreach ($ratedMeetupsVotes as $vote) {
             $ratedMeetupsIds[] = $vote->meetup_id;
         }
 
@@ -137,7 +111,7 @@ class MeetupsController extends _MainController
             ->all();
 
         $ratedMeetupsIds = [];
-        foreach($ratedMeetupsVotes as $vote) {
+        foreach ($ratedMeetupsVotes as $vote) {
             $ratedMeetupsIds[] = $vote->meetup_id;
         }
 
@@ -166,14 +140,15 @@ class MeetupsController extends _MainController
         ]);
     }
 
-    public function actionUpdateRating() {
-        if(!Yii::$app->request->isAjax) {
+    public function actionUpdateRating()
+    {
+        if (!Yii::$app->request->isAjax) {
             throw new NotFoundHttpException();
         }
 
         Yii::$app->response->format = Response::FORMAT_JSON;
 
-        if(!isset($_POST['meetupId'])) {
+        if (!isset($_POST['meetupId'])) {
             throw new BadRequestHttpException();
         }
 
@@ -182,16 +157,16 @@ class MeetupsController extends _MainController
 
         $meetup = Meetup::findOne(['id' => $_POST['meetupId']]);
 
-        if(is_null($meetup)) {
+        if (is_null($meetup)) {
             throw new BadRequestHttpException();
         }
 
-        if(!isset($_POST['value'])) {
+        if (!isset($_POST['value'])) {
             $this->deleteVote($meetup, $user);
         } else {
             $value = $_POST['value'];
 
-            if(!ctype_digit($value)) {
+            if (!ctype_digit($value)) {
                 throw new BadRequestHttpException();
             }
 
@@ -205,11 +180,11 @@ class MeetupsController extends _MainController
         $meetupVotes = $meetup->votes;
         $meetupRates = count($meetupVotes);
 
-        if($meetupRates === 0) {
+        if ($meetupRates === 0) {
             $meetupRating = null;
         } else {
             $meetupVoteValues = [];
-            foreach($meetupVotes as $vote) {
+            foreach ($meetupVotes as $vote) {
                 $meetupVoteValues[] = $vote->value;
             }
 
@@ -223,31 +198,33 @@ class MeetupsController extends _MainController
         ];
     }
 
-    private function deleteVote($meetup, $user) {
+    private function deleteVote($meetup, $user)
+    {
         $vote = Vote::findOne([
             'meetup_id' => $meetup->id,
             'voter_id' => $user->id,
         ]);
 
-        if(!is_null($vote)) {
+        if (!is_null($vote)) {
             $vote->delete();
         }
     }
 
-    private function updateVote($meetup, $user, $value) {
+    private function updateVote($meetup, $user, $value)
+    {
         $vote = Vote::findOne([
             'meetup_id' => $meetup->id,
             'voter_id' => $user->id,
         ]);
 
-        if(is_null($vote)) {
+        if (is_null($vote)) {
             $vote = new Vote();
             $vote->meetup_id = $meetup->id;
             $vote->voter_id = $user->id;
         }
         $vote->value = $value;
 
-        if(!$vote->save()) {
+        if (!$vote->save()) {
             throw new InternalErrorException();
         }
     }

@@ -8,3 +8,7 @@
     color: #f1c40f;
     text-decoration: none;
 }
+
+.starrr a.starrr-readonly {
+    cursor: default;
+}

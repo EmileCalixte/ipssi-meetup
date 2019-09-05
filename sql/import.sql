@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : database
--- Généré le :  mer. 04 sep. 2019 à 15:41
+-- Généré le :  jeu. 05 sep. 2019 à 10:35
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.2.19
 
@@ -68,26 +68,27 @@ CREATE TABLE `user` (
   `password_hash` varchar(10000) COLLATE utf8mb4_unicode_ci NOT NULL,
   `firstname` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lastname` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `register_date` datetime NOT NULL
+  `register_date` datetime NOT NULL,
+  `is_admin` bit(1) NOT NULL DEFAULT b'0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `user`
 --
 
-INSERT INTO `user` (`id`, `email`, `password_hash`, `firstname`, `lastname`, `register_date`) VALUES
-(1, 'calixte.emile@gmail.com', '$2y$10$rtvqadu/3cirawcONjhh4OXauAW2QcoP6dmfNRXCOrQDm3RGuPbwu', 'Emile', 'Calixte', '2019-09-02 09:10:13'),
-(2, 'demo1@example.com', '$2y$13$YzH0mQT.X4DDqpGyjjRmku00uWDLC7cGtLKz3I4i1Jz2ZGhmHg8Pq', 'Demo1', 'User1', '2019-09-03 10:30:19'),
-(3, 'demo2@example.com', '$2y$13$bDfNz6xv7djmTDbA5wHIUOrGcCGN24Q25JEKIpv8F57gq7NAAGVxa', 'Demo2', 'User2', '2019-09-03 10:30:56'),
-(4, 'demo3@example.com', '$2y$13$bejzreZWBKRKWa9U92luUeYZ5gwe4U.PRdxVLPEn0lyuqXYYQHze.', 'Demo3', 'User3', '2019-09-03 10:31:18'),
-(5, 'demo4@example.com', '$2y$13$bejzreZWBKRKWa9U92luUeYZ5gwe4U.PRdxVLPEn0lyuqXYYQHze.', 'Demo4', 'User4', '2019-09-03 10:31:19'),
-(6, 'demo5@example.com', '$2y$13$bejzreZWBKRKWa9U92luUeYZ5gwe4U.PRdxVLPEn0lyuqXYYQHze.', 'Demo5', 'User5', '2019-09-03 10:31:20'),
-(7, 'demo6@example.com', '$2y$13$bejzreZWBKRKWa9U92luUeYZ5gwe4U.PRdxVLPEn0lyuqXYYQHze.', 'Demo6', 'User6', '2019-09-03 10:31:54'),
-(8, 'demo7@example.com', '$2y$13$bejzreZWBKRKWa9U92luUeYZ5gwe4U.PRdxVLPEn0lyuqXYYQHze.', 'Demo7', 'User7', '2019-09-03 10:32:21'),
-(9, 'demo8@example.com', '$2y$13$bejzreZWBKRKWa9U92luUeYZ5gwe4U.PRdxVLPEn0lyuqXYYQHze.', 'Demo8', 'User8', '2019-09-03 10:32:44'),
-(10, 'demo9@example.com', '$2y$13$bejzreZWBKRKWa9U92luUeYZ5gwe4U.PRdxVLPEn0lyuqXYYQHze.', 'Demo9', 'User9', '2019-09-03 10:32:59'),
-(11, 'demo10@example.com', '$2y$13$bejzreZWBKRKWa9U92luUeYZ5gwe4U.PRdxVLPEn0lyuqXYYQHze.', 'Demo10', 'User10', '2019-09-03 10:33:14'),
-(13, 'demo11@example.com', '$2y$13$bejzreZWBKRKWa9U92luUeYZ5gwe4U.PRdxVLPEn0lyuqXYYQHze.', 'Demo11', 'User11', '2019-09-03 10:33:57');
+INSERT INTO `user` (`id`, `email`, `password_hash`, `firstname`, `lastname`, `register_date`, `is_admin`) VALUES
+(1, 'calixte.emile@gmail.com', '$2y$10$rtvqadu/3cirawcONjhh4OXauAW2QcoP6dmfNRXCOrQDm3RGuPbwu', 'Emile', 'Calixte', '2019-09-02 09:10:13', b'1'),
+(2, 'demo1@example.com', '$2y$13$YzH0mQT.X4DDqpGyjjRmku00uWDLC7cGtLKz3I4i1Jz2ZGhmHg8Pq', 'Demo1', 'User1', '2019-09-03 10:30:19', b'0'),
+(3, 'demo2@example.com', '$2y$13$bDfNz6xv7djmTDbA5wHIUOrGcCGN24Q25JEKIpv8F57gq7NAAGVxa', 'Demo2', 'User2', '2019-09-03 10:30:56', b'0'),
+(4, 'demo3@example.com', '$2y$13$bejzreZWBKRKWa9U92luUeYZ5gwe4U.PRdxVLPEn0lyuqXYYQHze.', 'Demo3', 'User3', '2019-09-03 10:31:18', b'0'),
+(5, 'demo4@example.com', '$2y$13$bejzreZWBKRKWa9U92luUeYZ5gwe4U.PRdxVLPEn0lyuqXYYQHze.', 'Demo4', 'User4', '2019-09-03 10:31:19', b'0'),
+(6, 'demo5@example.com', '$2y$13$bejzreZWBKRKWa9U92luUeYZ5gwe4U.PRdxVLPEn0lyuqXYYQHze.', 'Demo5', 'User5', '2019-09-03 10:31:20', b'0'),
+(7, 'demo6@example.com', '$2y$13$bejzreZWBKRKWa9U92luUeYZ5gwe4U.PRdxVLPEn0lyuqXYYQHze.', 'Demo6', 'User6', '2019-09-03 10:31:54', b'0'),
+(8, 'demo7@example.com', '$2y$13$bejzreZWBKRKWa9U92luUeYZ5gwe4U.PRdxVLPEn0lyuqXYYQHze.', 'Demo7', 'User7', '2019-09-03 10:32:21', b'0'),
+(9, 'demo8@example.com', '$2y$13$bejzreZWBKRKWa9U92luUeYZ5gwe4U.PRdxVLPEn0lyuqXYYQHze.', 'Demo8', 'User8', '2019-09-03 10:32:44', b'0'),
+(10, 'demo9@example.com', '$2y$13$bejzreZWBKRKWa9U92luUeYZ5gwe4U.PRdxVLPEn0lyuqXYYQHze.', 'Demo9', 'User9', '2019-09-03 10:32:59', b'0'),
+(11, 'demo10@example.com', '$2y$13$bejzreZWBKRKWa9U92luUeYZ5gwe4U.PRdxVLPEn0lyuqXYYQHze.', 'Demo10', 'User10', '2019-09-03 10:33:14', b'0'),
+(13, 'demo11@example.com', '$2y$13$bejzreZWBKRKWa9U92luUeYZ5gwe4U.PRdxVLPEn0lyuqXYYQHze.', 'Demo11', 'User11', '2019-09-03 10:33:57', b'0');
 
 -- --------------------------------------------------------
 
@@ -113,7 +114,6 @@ INSERT INTO `vote` (`id`, `meetup_id`, `voter_id`, `value`) VALUES
 (4, 2, 3, 4),
 (5, 1, 4, 3),
 (6, 2, 4, 4),
-(8, 3, 1, 5),
 (9, 13, 2, 2),
 (10, 7, 2, 5),
 (11, 10, 2, 2),
@@ -153,7 +153,38 @@ INSERT INTO `vote` (`id`, `meetup_id`, `voter_id`, `value`) VALUES
 (45, 5, 6, 4),
 (46, 4, 6, 1),
 (47, 14, 6, 5),
-(48, 8, 6, 4);
+(48, 8, 6, 4),
+(49, 13, 7, 5),
+(50, 10, 7, 5),
+(51, 4, 7, 5),
+(52, 15, 7, 2),
+(53, 12, 7, 4),
+(54, 9, 7, 5),
+(55, 1, 7, 4),
+(56, 5, 7, 3),
+(57, 6, 7, 5),
+(58, 7, 8, 1),
+(59, 2, 8, 5),
+(60, 1, 8, 4),
+(61, 14, 8, 5),
+(62, 15, 8, 4),
+(63, 12, 9, 4),
+(64, 1, 9, 4),
+(65, 5, 9, 5),
+(66, 13, 9, 3),
+(67, 3, 9, 1),
+(68, 4, 9, 1),
+(69, 11, 9, 3),
+(70, 12, 11, 5),
+(71, 5, 11, 3),
+(72, 9, 11, 1),
+(73, 1, 11, 4),
+(74, 10, 11, 4),
+(75, 7, 11, 5),
+(76, 14, 11, 1),
+(77, 12, 13, 4),
+(78, 1, 13, 5),
+(79, 5, 13, 4);
 
 --
 -- Index pour les tables déchargées
@@ -202,7 +233,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT pour la table `vote`
 --
 ALTER TABLE `vote`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- Contraintes pour les tables déchargées

@@ -13,6 +13,7 @@ use Yii;
  * @property string $firstname
  * @property string $lastname
  * @property string $register_date
+ * @property bool $is_admin
  *
  * @property Meetup[] $meetups
  * @property Vote[] $votes
@@ -36,6 +37,7 @@ class User extends \yii\db\ActiveRecord
         return [
             [['email', 'password_hash', 'firstname', 'lastname', 'register_date'], 'required'],
             [['register_date'], 'safe'],
+            [['is_admin'], 'boolean'],
             [['email'], 'string', 'max' => 254],
             [['password_hash'], 'string', 'max' => 10000],
             [['firstname', 'lastname'], 'string', 'max' => 32],
@@ -55,6 +57,7 @@ class User extends \yii\db\ActiveRecord
             'firstname' => 'Firstname',
             'lastname' => 'Lastname',
             'register_date' => 'Register Date',
+            'is_admin' => 'Is Admin',
         ];
     }
 

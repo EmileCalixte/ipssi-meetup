@@ -18,7 +18,7 @@ $this->title = $meetup->title;
 <p>Rating : <span id="rating"><?= is_null($rating) ? '-' : $rating ?></span> (<span id="rates"><?= count($meetup->votes) ?></span> rates)</p>
 <div id="your-vote-container">
     <?php
-    if(Yii::$app->user->isGuest) {
+    if (Yii::$app->user->isGuest) {
         ?>
         <span>You must <a href="/login">login</a> to rate this conference</span>
         <?php
@@ -32,16 +32,15 @@ $this->title = $meetup->title;
 </div>
 
 <?php
-if(!Yii::$app->user->isGuest) {
-    ?>
+if (!Yii::$app->user->isGuest) {
+        ?>
     <script type="text/javascript" src="/starrr/starrr.js"></script>
     <script type="text/javascript">
         $('.starrr').starrr({
             <?php
-                if(!is_null($vote)) {
-                ?>rating: <?= $vote->value ?>, <?php
-            }
-            ?>
+                if (!is_null($vote)) {
+                    ?>rating: <?= $vote->value ?>, <?php
+                } ?>
             max: 5,
             emptyClass: 'far fa-star',
             fullClass: 'fas fa-star',
@@ -77,4 +76,4 @@ if(!Yii::$app->user->isGuest) {
         }
     </script>
     <?php
-}
+    }

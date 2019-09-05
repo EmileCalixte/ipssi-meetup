@@ -1,35 +1,28 @@
 <?php
-
 /** @var yii\web\View $this */
 
 use app\components\Util;
 use app\models\databaseModels\Meetup;
-use app\models\databaseModels\Vote;
-use app\models\User;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 
-/** @var yii\data\ActiveDataProvider $ratedMeetupsDataProvider */
+/** @var yii\data\ActiveDataProvider $meetupsDataProvider */
 
-$this->title = 'Rated meetups';
-
-/** @var User $user */
-$user = Yii::$app->user->identity;
-?>
+$this->title = 'Admin panel - Meetups';?>
 
 <h1><?= Html::encode($this->title) ?></h1>
 
 <?php Pjax::begin(); ?>
 
 <?= GridView::widget([
-    'dataProvider' => $ratedMeetupsDataProvider,
+    'dataProvider' =>$meetupsDataProvider,
     'formatter' => [
         'class' => yii\i18n\Formatter::class,
         'nullDisplay' => '<i style="color: #999">-</i>',
     ],
     'layout' => '{items}{pager}',
-    'emptyText' => 'You haven\'t rated any meetup.',
+    'emptyText' => 'There is currently no meetups.',
     'columns' => [
         [
             'attribute' => 'title',
@@ -37,7 +30,7 @@ $user = Yii::$app->user->identity;
             'format' => 'raw',
             'value' => function ($meetup) {
                 /** @var Meetup $meetup */
-                return '<a data-pjax=0 href="/meetups/view/' . $meetup->id . '">' . Html::encode($meetup->title) . '</a>';
+                return '<a data-pjax=0 href="/admin/meetups/' . $meetup->id . '">' . Html::encode($meetup->title) . '</a>';
             }
         ],
         [
@@ -65,23 +58,8 @@ $user = Yii::$app->user->identity;
                 $votes = $meetup->votes;
                 return count($votes);
             }
-        ],
-        [
-            'label' => 'Your rate',
-            'value' => function ($meetup) use ($user) {
-                /** @var Meetup $meetup */
-                $vote = Vote::findOne([
-                    'meetup_id' => $meetup->id,
-                    'voter_id' => $user->id,
-                ]);
-                return $vote->value . '/5';
-            }
         ]
     ]
 ]); ?>
 
 <?php Pjax::end(); ?>
-
-
-
-

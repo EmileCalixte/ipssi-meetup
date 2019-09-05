@@ -3,7 +3,6 @@
 
 namespace app\controllers;
 
-
 use Yii;
 use yii\web\Controller;
 
@@ -22,7 +21,8 @@ class _MainController extends Controller
         return parent::beforeAction($action);
     }
 
-    private function redirectToLoginIfAnonymousNotallowed() {
+    private function redirectToLoginIfAnonymousNotallowed()
+    {
         $actionPath = $this->id . '/' . $this->action->id;
 
         $anonymousAuthorizedActions = [
@@ -34,8 +34,8 @@ class _MainController extends Controller
             'meetups/view',
         ];
 
-        if(Yii::$app->user->isGuest) {
-            if(!in_array($actionPath, $anonymousAuthorizedActions)) {
+        if (Yii::$app->user->isGuest) {
+            if (!in_array($actionPath, $anonymousAuthorizedActions)) {
                 header('location: /login');
                 die;
             }
@@ -44,14 +44,18 @@ class _MainController extends Controller
 
     private function removeTrailingSlash()
     {
-        if(Yii::$app->request->url !== '/') {
+        if (Yii::$app->request->url !== '/') {
             $exploded = explode('?', Yii::$app->request->url);
             $url = array_shift($exploded);
             $trimedUrl = rtrim($url, '/');
-            if(empty($trimedUrl)) $trimedUrl = '/';
-            if($trimedUrl !== $url) {
+            if (empty($trimedUrl)) {
+                $trimedUrl = '/';
+            }
+            if ($trimedUrl !== $url) {
                 $queryString = implode('?', $exploded);
-                if(!empty($queryString)) $queryString = '?' . $queryString;
+                if (!empty($queryString)) {
+                    $queryString = '?' . $queryString;
+                }
                 header('location: ' . $trimedUrl . $queryString);
                 die;
             }

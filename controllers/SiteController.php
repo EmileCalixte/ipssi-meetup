@@ -32,8 +32,6 @@ class SiteController extends _MainController
 
     public function actionIndex()
     {
-        $searchModel = new MeetupSearch();
-
         $query = Meetup::find()
             ->select("
                     meetup.id as id,
@@ -43,7 +41,7 @@ class SiteController extends _MainController
             ->leftJoin('vote', 'meetup.id = vote.meetup_id')
             ->groupBy('meetup.id');
 
-        if(isset($_GET['search'])) {
+        if (isset($_GET['search'])) {
             $query->where(['like', 'title', $_GET['search']]);
         }
 
@@ -61,31 +59,30 @@ class SiteController extends _MainController
 
         return $this->render('index', [
             'meetupsDataProvider' => $meetupsDataProvider,
-            'searchModel' => $searchModel,
         ]);
     }
 
     public function actionRegister()
     {
-        if(!Yii::$app->user->isGuest) {
+        if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
         $model = new RegisterForm();
-        if($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $user = new User();
             $user->email = $model->email;
             $user->firstname = $model->firstname;
             $user->lastname = $model->lastname;
             $user->password_hash = Yii::$app->security->generatePasswordHash($model->password);
             $user->register_date = gmdate('Y-m-d H:i:s');
-            if(!$user->save()) {
+            if (!$user->save()) {
                 throw new InternalErrorException();
             }
 
             // On login l'utilisateur directement
             $identityUser = \app\models\User::findOne(['id' => $user->id]);
-            if(! is_null($identityUser)) {
+            if (! is_null($identityUser)) {
                 Yii::$app->user->login($identityUser);
             }
             return $this->goHome();
@@ -100,12 +97,12 @@ class SiteController extends _MainController
 
     public function actionLogin()
     {
-        if(!Yii::$app->user->isGuest) {
+        if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
         $model = new LoginForm();
-        if($model->load(Yii::$app->request->post()) && $model->login()) {
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }
 
@@ -129,6 +126,6 @@ class SiteController extends _MainController
 
     public function actionNotFound()
     {
-        throw new NotFoundHttpException('Page not found');
+        throw new NotFoundHttpException('Page not found.');
     }
 }

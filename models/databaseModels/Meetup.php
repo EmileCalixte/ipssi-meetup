@@ -32,7 +32,7 @@ class Meetup extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'description', 'creator_id'], 'required'],
+            [['title', 'description'], 'required'],
             [['creator_id'], 'integer'],
             [['title'], 'string', 'max' => 40],
             [['description'], 'string', 'max' => 500],

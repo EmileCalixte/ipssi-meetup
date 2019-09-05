@@ -4,13 +4,11 @@
 
 use app\components\Util;
 use app\models\databaseModels\Meetup;
-use app\models\search\MeetupSearch;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 
 /** @var yii\data\ActiveDataProvider $meetupsDataProvider */
-/** @var MeetupSearch $searchModel */
 
 $this->title = 'Meetups';
 ?>
@@ -29,7 +27,7 @@ $this->title = 'Meetups';
 <?php Pjax::begin(); ?>
 
 <?= GridView::widget([
-    'dataProvider' =>$meetupsDataProvider,
+    'dataProvider' => $meetupsDataProvider,
     'formatter' => [
         'class' => yii\i18n\Formatter::class,
         'nullDisplay' => '<i style="color: #999">-</i>',
@@ -41,7 +39,7 @@ $this->title = 'Meetups';
             'attribute' => 'title',
             'label' => 'Title',
             'format' => 'raw',
-            'value' => function($meetup) {
+            'value' => function ($meetup) {
                 /** @var Meetup $meetup */
                 return '<a data-pjax=0 href="/meetups/view/' . $meetup->id . '">' . Html::encode($meetup->title) . '</a>';
             }
@@ -49,13 +47,15 @@ $this->title = 'Meetups';
         [
             'attribute' => 'rating',
             'label' => 'Rating',
-            'value' => function($meetup) {
+            'value' => function ($meetup) {
                 /** @var Meetup $meetup */
                 $votes = $meetup->votes;
-                if(count($votes) === 0) return null;
+                if (count($votes) === 0) {
+                    return null;
+                }
 
                 $voteValues = [];
-                foreach($votes as $vote) {
+                foreach ($votes as $vote) {
                     $voteValues[] = $vote->value;
                 }
                 return Util::rateAverage(...$voteValues) . '/5';
@@ -64,7 +64,7 @@ $this->title = 'Meetups';
         [
             'attribute' => 'rates',
             'label' => 'Rates',
-            'value' => function($meetup) {
+            'value' => function ($meetup) {
                 /** @var Meetup $meetup */
                 $votes = $meetup->votes;
                 return count($votes);

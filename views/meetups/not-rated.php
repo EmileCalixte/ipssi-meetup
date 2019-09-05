@@ -35,7 +35,7 @@ $user = Yii::$app->user->identity;
             'attribute' => 'title',
             'label' => 'Title',
             'format' => 'raw',
-            'value' => function($meetup) {
+            'value' => function ($meetup) {
                 /** @var Meetup $meetup */
                 return '<a data-pjax=0 href="/meetups/view/' . $meetup->id . '">' . Html::encode($meetup->title) . '</a>';
             }
@@ -43,13 +43,15 @@ $user = Yii::$app->user->identity;
         [
             'attribute' => 'rating',
             'label' => 'Rating',
-            'value' => function($meetup) {
+            'value' => function ($meetup) {
                 /** @var Meetup $meetup */
                 $votes = $meetup->votes;
-                if(count($votes) === 0) return null;
+                if (count($votes) === 0) {
+                    return null;
+                }
 
                 $voteValues = [];
-                foreach($votes as $vote) {
+                foreach ($votes as $vote) {
                     $voteValues[] = $vote->value;
                 }
                 return Util::rateAverage(...$voteValues) . '/5';
@@ -58,7 +60,7 @@ $user = Yii::$app->user->identity;
         [
             'attribute' => 'rates',
             'label' => 'Rates',
-            'value' => function($meetup) {
+            'value' => function ($meetup) {
                 /** @var Meetup $meetup */
                 $votes = $meetup->votes;
                 return count($votes);

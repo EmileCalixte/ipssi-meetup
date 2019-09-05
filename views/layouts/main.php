@@ -19,10 +19,13 @@ $navItems = [
     ['label' => 'Meetups', 'url' => ['/meetups']]
 ];
 
-if(Yii::$app->user->isGuest) {
+if (Yii::$app->user->isGuest) {
     $navItems[] = ['label' => 'Login', 'url' => ['/login']];
     $navItems[] = ['label' => 'Register', 'url' => ['/register']];
 } else {
+    if ($identity->is_admin) {
+        $navItems[] = ['label' => 'Admin', 'url' => ['/admin']];
+    }
     $navItems[] =
         '<li>'
         . Html::beginForm(['/logout'], 'post')

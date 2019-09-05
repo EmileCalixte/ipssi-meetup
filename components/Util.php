@@ -6,7 +6,7 @@ class Util
 {
     public static function average(...$numbers): ?float
     {
-        if(count($numbers) === 0) {
+        if (count($numbers) === 0) {
             return null;
         }
         return array_sum($numbers) / count($numbers);
