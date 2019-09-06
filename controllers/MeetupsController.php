@@ -6,13 +6,10 @@ namespace app\controllers;
 use app\components\Util;
 use app\models\databaseModels\Meetup;
 use app\models\databaseModels\Vote;
-use app\models\forms\CreateMeetupForm;
 use app\models\User;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Yii;
 use yii\data\ActiveDataProvider;
-use yii\db\Query;
-use yii\db\StaleObjectException;
 use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -21,6 +18,8 @@ class MeetupsController extends _MainController
 {
     public function actionIndex()
     {
+
+
         return $this->render('index');
     }
 

@@ -5,7 +5,6 @@ namespace app\controllers;
 use app\models\databaseModels\Meetup;
 use app\models\databaseModels\User;
 use app\models\forms\RegisterForm;
-use app\models\search\MeetupSearch;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Yii;
 use yii\data\ActiveDataProvider;

@@ -2,12 +2,9 @@
 
 /** @var $this yii\web\View */
 
-use app\components\Util;
-use app\models\databaseModels\Meetup;
 use app\models\databaseModels\Vote;
 use yii\grid\GridView;
 use yii\helpers\Html;
-use yii\widgets\Pjax;
 
 /** @var yii\data\ActiveDataProvider $ratesDataProvider */
 
