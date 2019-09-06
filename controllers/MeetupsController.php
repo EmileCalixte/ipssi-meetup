@@ -6,13 +6,11 @@ namespace app\controllers;
 use app\components\Util;
 use app\models\databaseModels\Meetup;
 use app\models\databaseModels\Vote;
-use app\models\forms\CreateMeetupForm;
 use app\models\User;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
-use yii\db\StaleObjectException;
 use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -21,7 +19,28 @@ class MeetupsController extends _MainController
 {
     public function actionIndex()
     {
-        return $this->render('index');
+        /** @var User $user */
+        $user = Yii::$app->user->identity;
+
+        $ratedMeetupsVotes = Vote::find()
+            ->select("meetup_id")
+            ->where(["voter_id" => $user->id])
+            ->all();
+
+        $ratedMeetupsIds = [];
+        foreach ($ratedMeetupsVotes as $vote) {
+            $ratedMeetupsIds[] = $vote->meetup_id;
+        }
+
+        $notRatedMeetupsNumber = (new Query())
+            ->select("id")
+            ->from(Meetup::tableName())
+            ->where(['not in', 'meetup.id', $ratedMeetupsIds])
+            ->count();
+
+        return $this->render('index', [
+            'notRatedMeetupsNumber' => $notRatedMeetupsNumber
+        ]);
     }
 
     public function actionView($id = null)

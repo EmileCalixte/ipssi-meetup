@@ -2,18 +2,16 @@
 
 /** @var $this yii\web\View */
 
-use app\components\Util;
-use app\models\databaseModels\Meetup;
 use app\models\databaseModels\Vote;
 use yii\grid\GridView;
 use yii\helpers\Html;
-use yii\widgets\Pjax;
 
 /** @var yii\data\ActiveDataProvider $ratesDataProvider */
 
 $this->title = 'Admin panel - ' . $user->firstname . ' ' . $user->lastname;
 
 ?>
+<a href="/admin/users"><i class="fas fa-long-arrow-alt-left"></i> Back to users</a>
 
 <h1><?= Html::encode($this->title) ?></h1>
 <span>Register date: <?= Html::encode($user->register_date) ?></span>
@@ -22,29 +20,38 @@ if ($user->is_admin) {
     ?>
     <br>
     <span><strong>Admin</strong></span>
-
-    <form method="post" action="/admin/revoke-admin" onsubmit="return confirm('Are you sure you want to revoke admin rights to this user ?')">
-        <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>">
-        <input type="hidden" name="userId" value="<?= $user->id ?>">
-        <button type="submit" class="btn btn-warning">Revoke admin rights</button>
-    </form>
     <?php
-} else {
-        ?>
-    <form method="post" action="/admin/grant-admin" onsubmit="return confirm('Are you sure you want to grant admin rights to this user ?')">
-        <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>">
-        <input type="hidden" name="userId" value="<?= $user->id ?>">
-        <button type="submit" class="btn btn-success">Grant admin rights</button>
-    </form>
-    <?php
-    }
+}
 ?>
 
-<form method="post" action="/admin/delete-user" onsubmit="return confirm('Are you sure you want to delete this user ?')">
-    <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>">
-    <input type="hidden" name="userId" value="<?= $user->id ?>">
-    <button type="submit" class="btn btn-danger">Delete user</button>
-</form>
+<div>
+    <?php
+    if ($user->is_admin) {
+        ?>
+        <form style="display: inline-block" method="post" action="/admin/revoke-admin" onsubmit="return confirm('Are you sure you want to revoke admin rights to this user ?')">
+            <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>">
+            <input type="hidden" name="userId" value="<?= $user->id ?>">
+            <button type="submit" class="btn btn-warning">Revoke admin rights</button>
+        </form>
+        <?php
+    } else {
+            ?>
+        <form style="display: inline-block" method="post" action="/admin/grant-admin" onsubmit="return confirm('Are you sure you want to grant admin rights to this user ?')">
+            <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>">
+            <input type="hidden" name="userId" value="<?= $user->id ?>">
+            <button type="submit" class="btn btn-success">Grant admin rights</button>
+        </form>
+        <?php
+        }
+    ?>
+
+    <form style="display: inline-block" method="post" action="/admin/delete-user" onsubmit="return confirm('Are you sure you want to delete this user ?')">
+        <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>">
+        <input type="hidden" name="userId" value="<?= $user->id ?>">
+        <button type="submit" class="btn btn-danger">Delete user</button>
+    </form>
+
+</div>
 
 <h2>Meetups rated</h2>
 

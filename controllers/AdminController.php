@@ -10,7 +10,6 @@ use app\models\User;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Yii;
 use yii\data\ActiveDataProvider;
-use yii\db\Query;
 use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 

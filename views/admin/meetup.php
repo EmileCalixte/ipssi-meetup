@@ -14,7 +14,9 @@ use yii\helpers\Html;
 $this->title = 'Admin panel - ' . $meetup->title;
 
 ?>
-<a href="/admin/meetups">Back to meetups</a>
+
+<a href="/admin/meetups"><i class="fas fa-long-arrow-alt-left"></i> Back to meetups</a>
+
 <h1><?= Html::encode($this->title) ?></h1>
 <span><?= Html::encode($meetup->description) ?></span>
 

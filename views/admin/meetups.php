@@ -9,9 +9,13 @@ use yii\widgets\Pjax;
 
 /** @var yii\data\ActiveDataProvider $meetupsDataProvider */
 
-$this->title = 'Admin panel - Meetups';?>
+$this->title = 'Admin panel - Meetups';
+
+?>
 
 <h1><?= Html::encode($this->title) ?></h1>
+
+<a href="/admin/meetups/create" class="btn btn-success" style="margin-bottom: 5px">Create a meetup</a>
 
 <?php Pjax::begin(); ?>
 

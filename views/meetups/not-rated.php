@@ -4,7 +4,6 @@
 
 use app\components\Util;
 use app\models\databaseModels\Meetup;
-use app\models\databaseModels\Vote;
 use app\models\User;
 use yii\grid\GridView;
 use yii\helpers\Html;

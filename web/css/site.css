@@ -113,3 +113,35 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.no-padding {
+    padding: 0;
+}
+
+.menu-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.menu-list > li > a {
+    display: block;
+    width: 100%;
+    border: 1px solid #DDD;
+    box-shadow: 0 1px 2px #BBB;
+    border-radius: 3px;
+    padding: 10px;
+    font-size: 1.5em;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
+}
+
+.menu-list > li > a:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 2px #BBB;
+    transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
+}
+
+.menu-list > li:not(:last-child) > a {
+    margin-bottom: 5px;
+}
