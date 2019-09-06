@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : database
--- Généré le :  jeu. 05 sep. 2019 à 10:35
+-- Généré le :  ven. 06 sep. 2019 à 14:21
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.2.19
 
@@ -32,7 +32,7 @@ CREATE TABLE `meetup` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `creator_id` int(10) UNSIGNED NOT NULL
+  `creator_id` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -77,7 +77,6 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `email`, `password_hash`, `firstname`, `lastname`, `register_date`, `is_admin`) VALUES
-(1, 'calixte.emile@gmail.com', '$2y$10$rtvqadu/3cirawcONjhh4OXauAW2QcoP6dmfNRXCOrQDm3RGuPbwu', 'Emile', 'Calixte', '2019-09-02 09:10:13', b'1'),
 (2, 'demo1@example.com', '$2y$13$YzH0mQT.X4DDqpGyjjRmku00uWDLC7cGtLKz3I4i1Jz2ZGhmHg8Pq', 'Demo1', 'User1', '2019-09-03 10:30:19', b'0'),
 (3, 'demo2@example.com', '$2y$13$bDfNz6xv7djmTDbA5wHIUOrGcCGN24Q25JEKIpv8F57gq7NAAGVxa', 'Demo2', 'User2', '2019-09-03 10:30:56', b'0'),
 (4, 'demo3@example.com', '$2y$13$bejzreZWBKRKWa9U92luUeYZ5gwe4U.PRdxVLPEn0lyuqXYYQHze.', 'Demo3', 'User3', '2019-09-03 10:31:18', b'0'),
@@ -88,7 +87,8 @@ INSERT INTO `user` (`id`, `email`, `password_hash`, `firstname`, `lastname`, `re
 (9, 'demo8@example.com', '$2y$13$bejzreZWBKRKWa9U92luUeYZ5gwe4U.PRdxVLPEn0lyuqXYYQHze.', 'Demo8', 'User8', '2019-09-03 10:32:44', b'0'),
 (10, 'demo9@example.com', '$2y$13$bejzreZWBKRKWa9U92luUeYZ5gwe4U.PRdxVLPEn0lyuqXYYQHze.', 'Demo9', 'User9', '2019-09-03 10:32:59', b'0'),
 (11, 'demo10@example.com', '$2y$13$bejzreZWBKRKWa9U92luUeYZ5gwe4U.PRdxVLPEn0lyuqXYYQHze.', 'Demo10', 'User10', '2019-09-03 10:33:14', b'0'),
-(13, 'demo11@example.com', '$2y$13$bejzreZWBKRKWa9U92luUeYZ5gwe4U.PRdxVLPEn0lyuqXYYQHze.', 'Demo11', 'User11', '2019-09-03 10:33:57', b'0');
+(13, 'demo11@example.com', '$2y$13$bejzreZWBKRKWa9U92luUeYZ5gwe4U.PRdxVLPEn0lyuqXYYQHze.', 'Demo11', 'User11', '2019-09-03 10:33:57', b'0'),
+(14, 'admin@example.com', '$2y$13$oXgcSqPxBmSbxPrUGI.teuk1jHuvccLclEwO.WrqznHWpiAHS6Ryy', 'Demo', 'Admin', '2019-09-06 13:36:49', b'1');
 
 -- --------------------------------------------------------
 
@@ -227,7 +227,7 @@ ALTER TABLE `meetup`
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT pour la table `vote`
