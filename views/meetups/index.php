@@ -9,7 +9,9 @@ $this->title = 'Meetups';
 
 <h1><?= Html::encode($this->title) ?></h1>
 
-<ul>
-    <li><a href="/meetups/rated">Meetups I have rated</a></li>
-    <li><a href="/meetups/not-rated">Meetups I have not rated</a></li>
-</ul>
+<div class="col-sm-12 col-md-9 col-lg-6 no-padding">
+    <ul class="menu-list">
+        <li><a href="/meetups/rated"><i class="fas fa-check"></i> Meetups I have rated</a></li>
+        <li><a href="/meetups/not-rated"><i class="fas fa-times"></i> Meetups I have not rated</a></li>
+    </ul>
+</div>
