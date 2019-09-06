@@ -42,5 +42,11 @@ You should access to:
 - phpMyAdmin: [http://127.0.0.1:8080](http://127.0.0.1:8080)
 > Notice: If you're using Docker Toolbox, change 127.0.0.1 by the IP address of your virtual machine, ie 192.168.99.100
 
+### Fake data
+
+Fake users, meetups and rates are automatically imported when you start docker. If you want to change it, you have to edit the `/sql/import.sql` file.  
+You can login as demo users from `demo1@example.com` to `demo11@example.com` with password `demodemo`  
+You can login as admin user with `admin@example.com` with password `adminadmin`
+
 ## Contributing
 Feel free to open issues or pull requests if you want to contribute to this project.
