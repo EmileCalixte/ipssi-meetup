@@ -13,6 +13,8 @@ $this->title = 'Admin panel - Meetups';?>
 
 <h1><?= Html::encode($this->title) ?></h1>
 
+<a href="/admin/meetups/create" class="btn btn-success">Create a meetup</a>
+
 <?php Pjax::begin(); ?>
 
 <?= GridView::widget([
