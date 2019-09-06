@@ -3,10 +3,12 @@
 
 namespace app\controllers;
 
+use app\components\Util;
 use app\models\databaseModels\Meetup;
 use app\models\databaseModels\Vote;
 use app\models\forms\CreateMeetupForm;
 use app\models\User;
+use PHPMailer\PHPMailer\Exception;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -263,6 +265,10 @@ class AdminController extends _MainController
                 throw new InternalErrorException();
             }
 
+            if(!$this->sendMeetupCreatedEmails($meetup, $user)) {
+                Yii::$app->session->setFlash('warning', 'An error ocurred when sending emails to the community. Members of your community may not be notified.');
+            }
+
             return $this->redirect('/admin/meetups/' . $meetup->id);
         }
 
@@ -323,5 +329,35 @@ class AdminController extends _MainController
             'user' => $user,
             'ratesDataProvider' => $ratesDataProvider
         ]);
+    }
+
+    /**
+     * @param Meetup $createdMeetup
+     * @param User $creatorUser
+     * @return bool true if emails successfully sent, false otherwise
+     */
+    private function sendMeetupCreatedEmails(Meetup $createdMeetup, User $creatorUser): bool
+    {
+        $users = User::find()->where(['not', 'id = ' . $creatorUser->id])->all();
+        foreach($users as $user) {
+            /** @var User $user */
+            $mail = Util::getConfiguredMailerForMailhog();
+            $mail->addAddress($user->email);
+            $mail->isHTML(true);
+
+            $mail->Subject = 'A new meetup is available';
+            $mail->Body = '<h1>A new meetup is available !</h1><br><p>Hello ' . $user->firstname . ', a new meetup have just been created on ' . Yii::$app->name . ' ! Name of the meetup: ' . $createdMeetup->title . '. Don\'t forget to rate it !</p>';
+            $mail->AltBody = 'Hello ' . $user->firstname . ', a new meetup have just been created on ' . Yii::$app->name . ' ! Name of the meetup: ' . $createdMeetup->title . '. Don\'t forget to rate it !';
+
+            try {
+                if(!$mail->send()) {
+                    return false;
+                }
+            } catch(Exception $e) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
