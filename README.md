@@ -40,6 +40,7 @@ You should access to:
 
 - Application: [http://127.0.0.1:80](http://127.0.0.1:80)
 - phpMyAdmin: [http://127.0.0.1:8080](http://127.0.0.1:8080)
+- MailHog: [http://127.0.0.1:8025](http://127.0.0.1:8025)
 > Notice: If you're using Docker Toolbox, change 127.0.0.1 by the IP address of your virtual machine, ie 192.168.99.100
 
 ### Fake data
