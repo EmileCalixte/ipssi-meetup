@@ -33,7 +33,7 @@ $this->title = 'Meetups';
         'nullDisplay' => '<i style="color: #999">-</i>',
     ],
     'layout' => '{items}{pager}',
-    'emptyText' => 'There is currently no meetups.',
+    'emptyText' => 'No meetup found.',
     'columns' => [
         [
             'attribute' => 'title',

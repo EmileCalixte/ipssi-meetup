@@ -81,7 +81,7 @@ if (Yii::$app->user->isGuest) {
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">Meetup Manager - <?= date('Y') ?></p>
     </div>
 </footer>
 
