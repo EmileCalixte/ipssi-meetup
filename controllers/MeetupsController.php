@@ -10,6 +10,7 @@ use app\models\User;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\db\Query;
 use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -18,9 +19,28 @@ class MeetupsController extends _MainController
 {
     public function actionIndex()
     {
+        /** @var User $user */
+        $user = Yii::$app->user->identity;
 
+        $ratedMeetupsVotes = Vote::find()
+            ->select("meetup_id")
+            ->where(["voter_id" => $user->id])
+            ->all();
 
-        return $this->render('index');
+        $ratedMeetupsIds = [];
+        foreach ($ratedMeetupsVotes as $vote) {
+            $ratedMeetupsIds[] = $vote->meetup_id;
+        }
+
+        $notRatedMeetupsNumber = (new Query())
+            ->select("id")
+            ->from(Meetup::tableName())
+            ->where(['not in', 'meetup.id', $ratedMeetupsIds])
+            ->count();
+
+        return $this->render('index', [
+            'notRatedMeetupsNumber' => $notRatedMeetupsNumber
+        ]);
     }
 
     public function actionView($id = null)
